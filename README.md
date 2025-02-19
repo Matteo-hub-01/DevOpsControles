@@ -31,4 +31,4 @@ Ce projet est destiné à valider les connaissances en DevOps des élèves de 3�
 
 ## Déploiement netlify
 
-Vous pouvez consulter le site déployé ici : [Nom de votre projet](https://deft-hotteok-8895e9.netlify.app/)
+Vous pouvez consulter le site déployé ici : [Nom de votre projet](https://devopscontroles.netlify.app/)
