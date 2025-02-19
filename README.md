@@ -12,6 +12,10 @@ Ce projet est destiné à valider les connaissances en DevOps des élèves de 3�
 ## Test Results
 
 
+* **Test** ![Test Status](https://github.com/Matteo-hub-01/DevOpsControles/actions/workflows/test.yml/badge.svg)
+
+
+
 ## Available Badges
 
 * **License** ![License](https://img.shields.io/badge/license-MIT-green) - Github license (`gh_license`)
