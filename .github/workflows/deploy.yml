@@ -3,30 +3,35 @@ name: Deploy to Netlify
 on:
   push:
     branches:
-      - main  # Déclenche l'action sur les pushs vers la branche principale
+      - main  # Déclenchement sur push vers la branche principale
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
-    - name: Set up Node.js (si tu utilises Node.js pour ton site)
-      uses: actions/setup-node@v3
-      with:
-        node-version: '16'  # Version de Node.js que tu utilises
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
 
-    - name: Install dependencies
-      run: |
-        npm install  # Si tu utilises npm, sinon adapte cette commande à ton projet
+      - name: Install dependencies
+        run: npm install  # ou yarn install selon ton projet
 
-    - name: Build the site
-      run: |
-        npm run build  # Ou la commande appropriée pour ton projet (ex. `gatsby build`, `next build`, etc.)
+      - name: Build Project
+        run: npm run build  # ou yarn build si nécessaire
 
-    - name: Deploy to Netlify
-      uses: netlify/actions/cli@v3  # Action officielle Netlify CLI
-      with:
-        args: deploy --dir=./dist --site ${{ secrets.NETLIFY_SITE_ID }} --auth ${{ secrets.NETLIFY_AUTH_TOKEN }}
+      - name: Deploy to Netlify
+        uses: nwtgck/actions-netlify@v2
+        with:
+          publish-dir: "./dist"  # Remplace par le dossier de build
+          production-branch: main
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: "Auto-deployed via GitHub Actions"
+          alias: "latest"
+          enable-pull-request-comment: false
+          enable-commit-comment: false
+          netlify-auth-token: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          netlify-site-id: ${{ secrets.NETLIFY_SITE_ID }}
