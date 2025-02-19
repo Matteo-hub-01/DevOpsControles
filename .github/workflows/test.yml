@@ -26,3 +26,24 @@ jobs:
 
       - name: Run tests
         run: npm test
+
+      - name: Extract test results and update README
+        run: |
+          # Lire les résultats du fichier JSON
+          TEST_RESULTS=$(cat test-results.json)
+          
+          # Extraire le nombre de tests réussis et échoués
+          PASSED=$(echo "$TEST_RESULTS" | jq '.numPassedTests')
+          FAILED=$(echo "$TEST_RESULTS" | jq '.numFailedTests')
+          
+          # Mettre à jour le README avec les résultats
+          echo -e "\n## Test Results\n\nTests réussis: $PASSED\nTests échoués: $FAILED" >> README.md
+          
+          # Faire un commit du fichier README modifié
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add README.md
+          git commit -m "Update README with latest test results"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
